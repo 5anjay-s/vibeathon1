@@ -1,6 +1,9 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Globe, User } from 'lucide-react';
+import { Globe, Send, User } from 'lucide-react';
+import { useState } from 'react';
+import { SmsDialog } from './sms-dialog';
 
 type ChatMessageProps = {
   role: 'user' | 'assistant';
@@ -9,6 +12,7 @@ type ChatMessageProps = {
 };
 
 export default function ChatMessage({ role, content, isLoading = false }: ChatMessageProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const isAssistant = role === 'assistant';
 
   return (
@@ -27,7 +31,7 @@ export default function ChatMessage({ role, content, isLoading = false }: ChatMe
       )}
       <div
         className={cn(
-          'max-w-xl rounded-lg p-3 text-sm shadow-sm',
+          'max-w-xl rounded-lg p-3 text-sm shadow-sm relative group',
           isAssistant
             ? 'bg-card text-card-foreground'
             : 'bg-primary text-primary-foreground'
@@ -40,7 +44,27 @@ export default function ChatMessage({ role, content, isLoading = false }: ChatMe
             <span className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></span>
           </div>
         ) : (
-          <p className="whitespace-pre-wrap">{content}</p>
+          <>
+            <p className="whitespace-pre-wrap">{content}</p>
+            {isAssistant && content && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute -top-2 -right-2 h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity bg-background hover:bg-muted"
+                  onClick={() => setDialogOpen(true)}
+                >
+                  <Send className="h-4 w-4 text-muted-foreground" />
+                  <span className="sr-only">Send via SMS</span>
+                </Button>
+                <SmsDialog
+                  open={dialogOpen}
+                  onOpenChange={setDialogOpen}
+                  message={content}
+                />
+              </>
+            )}
+          </>
         )}
       </div>
       {!isAssistant && (

@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { getAdviceAction } from '@/app/actions';
 import ChatMessage from './chat-message';
 import ChatInput from './chat-input';
+import { Card } from './ui/card';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -30,7 +31,7 @@ export default function ChatInterface() {
     setMessages([
       {
         role: 'assistant',
-        content: "Hello! I'm Globetrotter AI. Ask me anything about your travel plans. Note: The app needs a Gemini API key to be configured by the administrator.",
+        content: "Hello! I'm Globetrotter AI, your personal travel assistant. Ask me for travel suggestions, real-time advice, or information about local customs!",
       },
     ]);
   }, []);
@@ -61,7 +62,7 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <Card className="flex flex-col h-full shadow-lg">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((msg, index) => (
           <ChatMessage key={index} role={msg.role} content={msg.content} />
@@ -72,6 +73,6 @@ export default function ChatInterface() {
       <div className="p-4 bg-card border-t">
         <ChatInput onSend={handleSend} isLoading={isLoading} />
       </div>
-    </div>
+    </Card>
   );
 }

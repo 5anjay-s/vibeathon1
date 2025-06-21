@@ -1,6 +1,7 @@
 'use server';
 
 import { getRealTimeAdvice } from '@/ai/flows/real-time-advice';
+import twilio from 'twilio';
 
 export async function getAdviceAction(query: string) {
   if (!process.env.GEMINI_API_KEY) {
@@ -19,5 +20,38 @@ export async function getAdviceAction(query: string) {
         return { advice: null, error: 'Failed to get advice. The AI model may be unavailable or misconfigured.'}
     }
     return { advice: null, error: 'Failed to get advice. An unexpected error occurred.' };
+  }
+}
+
+export async function sendSmsAction(formData: FormData) {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+
+  if (!accountSid || !authToken || !twilioPhoneNumber) {
+    return { success: false, error: 'Twilio environment variables are not fully configured.' };
+  }
+
+  const to = formData.get('phoneNumber') as string;
+  const message = formData.get('message') as string;
+
+  if (!to || !message) {
+    return { success: false, error: 'Phone number and message are required.' };
+  }
+  
+  try {
+    const client = twilio(accountSid, authToken);
+    await client.messages.create({
+      body: message,
+      from: twilioPhoneNumber,
+      to: to
+    });
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error sending SMS:', error);
+    if (error.code === 21211) { // Invalid 'To' Phone Number
+        return { success: false, error: 'The phone number you provided is not valid.' };
+    }
+    return { success: false, error: 'Failed to send SMS. An unexpected error occurred.' };
   }
 }
