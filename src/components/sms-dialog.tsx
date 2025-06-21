@@ -9,7 +9,6 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useFormState, useFormStatus } from 'react-dom';
@@ -47,7 +46,7 @@ export function SmsDialog({ open, onOpenChange, message }: SmsDialogProps) {
     if (state.success) {
       toast({
         title: 'Success!',
-        description: 'The SMS has been sent.',
+        description: 'The SMS has been sent to the administrator.',
       });
       onOpenChange(false);
     } else if (state.error) {
@@ -63,9 +62,9 @@ export function SmsDialog({ open, onOpenChange, message }: SmsDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Send via SMS</DialogTitle>
+          <DialogTitle>Send to Administrator</DialogTitle>
           <DialogDescription>
-            Enter a phone number to send this message to. Include the country code.
+            This will send the chat message to the administrator via SMS.
           </DialogDescription>
         </DialogHeader>
         <form action={formAction}>
@@ -76,16 +75,6 @@ export function SmsDialog({ open, onOpenChange, message }: SmsDialogProps) {
               </CardContent>
             </Card>
             <input type="hidden" name="message" value={message} />
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Input
-                id="phoneNumber"
-                name="phoneNumber"
-                placeholder="e.g. +15551234567"
-                className="col-span-4"
-                required
-                type="tel"
-              />
-            </div>
           </div>
           <DialogFooter>
             <SubmitButton />

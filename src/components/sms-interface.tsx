@@ -7,7 +7,6 @@ import { sendSmsAction } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
@@ -36,7 +35,7 @@ export default function SmsInterface() {
     if (state.success) {
       toast({
         title: 'Success!',
-        description: 'The SMS has been sent.',
+        description: 'Your message has been sent to the administrator.',
       });
       formRef.current?.reset();
     } else if (state.error) {
@@ -52,23 +51,13 @@ export default function SmsInterface() {
     <div className="flex justify-center items-start pt-0 md:pt-8">
         <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
-            <CardTitle>Send an SMS</CardTitle>
+            <CardTitle>Contact Administrator</CardTitle>
             <CardDescription>
-            Compose and send a message directly from the app.
+            Compose and send a message directly to the administrator.
             </CardDescription>
         </CardHeader>
         <CardContent>
             <form ref={formRef} action={formAction} className="space-y-4">
-                <div className="space-y-2">
-                    <Label htmlFor="phoneNumberSms">Phone Number</Label>
-                    <Input
-                        id="phoneNumberSms"
-                        name="phoneNumber"
-                        placeholder="e.g. +15551234567"
-                        required
-                        type="tel"
-                    />
-                </div>
                 <div className="space-y-2">
                     <Label htmlFor="messageSms">Message</Label>
                     <Textarea

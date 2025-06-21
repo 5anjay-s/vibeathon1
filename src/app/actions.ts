@@ -27,16 +27,16 @@ export async function sendSmsAction(formData: FormData) {
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
   const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+  const adminPhoneNumber = process.env.ADMIN_PHONE_NUMBER;
 
-  if (!accountSid || !authToken || !twilioPhoneNumber) {
-    return { success: false, error: 'Twilio environment variables are not fully configured.' };
+  if (!accountSid || !authToken || !twilioPhoneNumber || !adminPhoneNumber) {
+    return { success: false, error: 'Twilio and administrator phone number environment variables are not fully configured.' };
   }
 
-  const to = formData.get('phoneNumber') as string;
   const message = formData.get('message') as string;
 
-  if (!to || !message) {
-    return { success: false, error: 'Phone number and message are required.' };
+  if (!message) {
+    return { success: false, error: 'Message is required.' };
   }
   
   try {
@@ -44,13 +44,13 @@ export async function sendSmsAction(formData: FormData) {
     await client.messages.create({
       body: message,
       from: twilioPhoneNumber,
-      to: to
+      to: adminPhoneNumber
     });
     return { success: true };
   } catch (error: any) {
     console.error('Error sending SMS:', error);
     if (error.code === 21211) { // Invalid 'To' Phone Number
-        return { success: false, error: 'The phone number you provided is not valid.' };
+        return { success: false, error: 'The administrator phone number configured in the environment is not valid.' };
     }
     return { success: false, error: 'Failed to send SMS. An unexpected error occurred.' };
   }
