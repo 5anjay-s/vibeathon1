@@ -5,8 +5,6 @@ import { useToast } from '@/hooks/use-toast';
 import { getAdviceAction } from '@/app/actions';
 import ChatMessage from './chat-message';
 import ChatInput from './chat-input';
-import { Input } from './ui/input';
-import { KeyRound } from 'lucide-react';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -16,7 +14,6 @@ type Message = {
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState('');
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +30,7 @@ export default function ChatInterface() {
     setMessages([
       {
         role: 'assistant',
-        content: "Hello! I'm Globetrotter AI. Enter your Gemini API key below and ask me anything about your travel plans.",
+        content: "Hello! I'm Globetrotter AI. Ask me anything about your travel plans. Note: The app needs a Gemini API key to be configured by the administrator.",
       },
     ]);
   }, []);
@@ -41,20 +38,11 @@ export default function ChatInterface() {
   const handleSend = async (query: string) => {
     if (!query.trim() || isLoading) return;
 
-    if (!apiKey.trim()) {
-      toast({
-        variant: 'destructive',
-        title: 'API Key Required',
-        description: 'Please enter your Gemini API Key to continue.',
-      });
-      return;
-    }
-
     const userMessage: Message = { role: 'user', content: query };
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
 
-    const result = await getAdviceAction(query, apiKey);
+    const result = await getAdviceAction(query);
 
     setIsLoading(false);
 
@@ -82,16 +70,6 @@ export default function ChatInterface() {
         <div ref={messagesEndRef} />
       </div>
       <div className="p-4 bg-card border-t">
-        <div className="flex items-center gap-2 mb-2">
-            <KeyRound className="h-4 w-4 text-muted-foreground" />
-            <Input
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter your Gemini API Key here"
-              className="flex-1"
-            />
-        </div>
         <ChatInput onSend={handleSend} isLoading={isLoading} />
       </div>
     </div>

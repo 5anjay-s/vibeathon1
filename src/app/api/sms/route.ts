@@ -6,11 +6,12 @@ export async function POST(req: NextRequest) {
   const accountSid = process.env.TWILIO_ACCOUNT_SID;
   const authToken = process.env.TWILIO_AUTH_TOKEN;
   const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+  const geminiApiKey = process.env.GEMINI_API_KEY;
 
-  if (!accountSid || !authToken || !twilioPhoneNumber) {
-    console.error('Twilio environment variables not set');
+  if (!accountSid || !authToken || !twilioPhoneNumber || !geminiApiKey) {
+    console.error('Application environment variables not fully set');
     const twiml = new twilio.twiml.MessagingResponse();
-    twiml.message('The application is not configured for SMS. Please contact the administrator.');
+    twiml.message('The application is not fully configured for SMS. Please contact the administrator.');
     return new NextResponse(twiml.toString(), {
       headers: { 'Content-Type': 'text/xml' },
       status: 500
