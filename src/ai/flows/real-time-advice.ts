@@ -25,7 +25,7 @@ export async function getRealTimeAdvice(input: GetRealTimeAdviceInput): Promise<
   return getRealTimeAdviceFlow(input);
 }
 
-const prompt = ai.definePrompt({
+const getRealTimeAdvicePromptConfig = {
   name: 'getRealTimeAdvicePrompt',
   input: {schema: GetRealTimeAdviceInputSchema},
   output: {schema: GetRealTimeAdviceOutputSchema},
@@ -44,7 +44,9 @@ const prompt = ai.definePrompt({
   Answer the following query:
 
   {{query}}`,
-});
+};
+
+const prompt = ai.definePrompt(getRealTimeAdvicePromptConfig);
 
 const getRealTimeAdviceFlow = ai.defineFlow(
   {
