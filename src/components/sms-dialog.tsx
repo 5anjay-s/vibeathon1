@@ -46,7 +46,7 @@ export function SmsDialog({ open, onOpenChange, message }: SmsDialogProps) {
     if (state.success) {
       toast({
         title: 'Success!',
-        description: 'The SMS has been sent to the administrator.',
+        description: 'The SMS has been sent to the Offline AI.',
       });
       onOpenChange(false);
     } else if (state.error) {
@@ -62,9 +62,9 @@ export function SmsDialog({ open, onOpenChange, message }: SmsDialogProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Send to Administrator</DialogTitle>
+          <DialogTitle>Send to Offline AI</DialogTitle>
           <DialogDescription>
-            This will send the chat message to the administrator via SMS.
+            This will send the chat message to the Offline AI via SMS.
           </DialogDescription>
         </DialogHeader>
         <form action={formAction}>

@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   if (!accountSid || !authToken || !twilioPhoneNumber || !geminiApiKey) {
     console.error('Application environment variables not fully set');
     const twiml = new twilio.twiml.MessagingResponse();
-    twiml.message('The application is not fully configured for SMS. Please contact the administrator.');
+    twiml.message('The application is not fully configured for SMS. Please contact support.');
     return new NextResponse(twiml.toString(), {
       headers: { 'Content-Type': 'text/xml' },
       status: 500

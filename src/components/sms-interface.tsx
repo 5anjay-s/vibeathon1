@@ -35,7 +35,7 @@ export default function SmsInterface() {
     if (state.success) {
       toast({
         title: 'Success!',
-        description: 'Your message has been sent to the administrator.',
+        description: 'Your message has been sent to the Offline AI.',
       });
       formRef.current?.reset();
     } else if (state.error) {
@@ -51,9 +51,9 @@ export default function SmsInterface() {
     <div className="flex justify-center items-start pt-0 md:pt-8">
         <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
-            <CardTitle>Contact Administrator</CardTitle>
+            <CardTitle>Ask Offline AI</CardTitle>
             <CardDescription>
-            Compose and send a message directly to the administrator.
+            Compose and send a message directly to the Offline AI.
             </CardDescription>
         </CardHeader>
         <CardContent>

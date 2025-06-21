@@ -30,7 +30,7 @@ export async function sendSmsAction(formData: FormData) {
   const adminPhoneNumber = process.env.ADMIN_PHONE_NUMBER;
 
   if (!accountSid || !authToken || !twilioPhoneNumber || !adminPhoneNumber) {
-    return { success: false, error: 'Twilio and administrator phone number environment variables are not fully configured.' };
+    return { success: false, error: 'Twilio and Offline AI phone number environment variables are not fully configured.' };
   }
 
   const message = formData.get('message') as string;
@@ -50,7 +50,7 @@ export async function sendSmsAction(formData: FormData) {
   } catch (error: any) {
     console.error('Error sending SMS:', error);
     if (error.code === 21211) { // Invalid 'To' Phone Number
-        return { success: false, error: 'The administrator phone number configured in the environment is not valid.' };
+        return { success: false, error: 'The Offline AI phone number configured in the environment is not valid.' };
     }
     return { success: false, error: 'Failed to send SMS. An unexpected error occurred.' };
   }
