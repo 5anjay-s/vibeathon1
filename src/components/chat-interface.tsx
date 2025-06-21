@@ -31,7 +31,7 @@ export default function ChatInterface() {
     setMessages([
       {
         role: 'assistant',
-        content: "Hello! I'm Globetrotter AI, your personal travel assistant. Ask me for travel suggestions, real-time advice, or information about local customs!",
+        content: "Hello! I'm TRA-WELL, your personal travel assistant. Ask me for travel suggestions, real-time advice, or information about local customs!",
       },
     ]);
   }, []);

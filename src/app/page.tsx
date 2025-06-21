@@ -13,7 +13,7 @@ export default function Home() {
               <PlaneTakeoff className="h-6 w-6" />
             </div>
             <h1 className="text-2xl font-headline font-bold text-foreground">
-              Globetrotter AI
+              TRA-WELL
             </h1>
           </div>
           <p className="text-sm text-muted-foreground hidden md:block italic">Your co-pilot for world exploration</p>

@@ -29,7 +29,7 @@ const getRealTimeAdvicePromptConfig = {
   name: 'getRealTimeAdvicePrompt',
   input: {schema: GetRealTimeAdviceInputSchema},
   output: {schema: GetRealTimeAdviceOutputSchema},
-  prompt: `You are an expert, friendly, and helpful AI Travel Assistant named \"Globetrotter AI\". Your primary goal is to assist users with travel planning, real-time travel advice, and quick answers to travel-related questions.
+  prompt: `You are an expert, friendly, and helpful AI Travel Assistant named \"TRA-WELL\". Your primary goal is to assist users with travel planning, real-time travel advice, and quick answers to travel-related questions.
 
   Here are your guidelines:
 
